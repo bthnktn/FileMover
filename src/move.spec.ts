@@ -1,4 +1,4 @@
-import move from './move';
+import move, { List } from './move';
 
 describe('move', () => {
   it('moves given file to another folder', () => {
@@ -67,5 +67,10 @@ describe('move', () => {
     ];
 
     expect(() => move(list, '2', '4')).toThrow('You cannot specify a file as the destination');
+  });
+
+  it('throws error if list is empty', () => {
+    const list: List = [];
+    expect(() => move(list, '2', '3')).toThrow('There is nothing to move in an empty list');
   });
 });

@@ -7,10 +7,14 @@ interface Folder extends File {
   files: File[];
 }
 
-type List = Folder[];
+export type List = Folder[];
 
 export default function move(list: List, source: string, destination: string): List {
   let sourceFile: File;
+
+  if (!list.length || !list) {
+    throw new Error('There is nothing to move in an empty list');
+  }
 
   return list.map((folder: Folder) => {
     if (folder.id === source) {
