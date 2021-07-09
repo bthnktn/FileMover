@@ -27,16 +27,14 @@ export default function move(list: List, source: string, destination: string): L
       throw new Error('You cannot specify a file as the destination');
     }
 
-    const fileInFolder = folder.files.find((file: File) => file.id === source);
-    const updatedFolder = folder;
+    const fileInFolderIdx = folder.files.findIndex((file: File) => file.id === source);
 
-    if (fileInFolder) {
-      sourceFile = fileInFolder;
-      updatedFolder.files = folder.files.filter((file: File) => file.id !== fileInFolder.id);
+    if (fileInFolderIdx > -1) {
+      [sourceFile] = folder.files.splice(fileInFolderIdx, 1);
     } else if (sourceFile && folder.id === destination) {
-      updatedFolder.files.push(sourceFile);
+      folder.files.push(sourceFile);
     }
 
-    return updatedFolder;
+    return folder;
   });
 }
